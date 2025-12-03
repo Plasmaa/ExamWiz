@@ -40,13 +40,13 @@ export default function QuestionSetsList() {
     if (loading) return <div className="p-8 flex justify-center"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div></div>;
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 max-w-5xl mx-auto pt-10">
             <div>
                 <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-primary flex items-center mb-2">
                     <ArrowLeft className="h-4 w-4 mr-1" /> Back to Dashboard
                 </Link>
-                <h1 className="text-3xl font-bold tracking-tight">All Exams</h1>
-                <p className="text-muted-foreground mt-2">View and manage all your generated question sets.</p>
+                <h1 className="text-3xl font-bold tracking-tight">Recent Activities</h1>
+                <p className="text-muted-foreground mt-2">View and manage all your generated question sets and exams.</p>
             </div>
 
             <div className="grid gap-4">

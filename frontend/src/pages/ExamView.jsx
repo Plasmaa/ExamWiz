@@ -80,7 +80,7 @@ export default function ExamView() {
             };
             const response = await api.post('/attempts/', attemptData);
             // Optional: Navigate to result view immediately or let user review here
-            navigate(`/results/${response.data.id}`);
+            // navigate(`/results/${response.data.id}`);
         } catch (error) {
             console.error("Failed to save attempt", error);
         }

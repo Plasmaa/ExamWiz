@@ -34,7 +34,7 @@ export default function Layout({ children }) {
     ];
 
     return (
-        <div className="flex min-h-screen bg-background">
+        <div className="flex h-screen overflow-hidden bg-background">
             {/* Mobile Header */}
             <div className="md:hidden fixed top-0 left-0 right-0 h-16 border-b bg-background/95 backdrop-blur z-50 flex items-center justify-between px-4">
                 <Link to="/" className="text-xl font-bold text-primary flex items-center gap-2">
