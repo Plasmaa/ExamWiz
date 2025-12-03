@@ -108,29 +108,7 @@ export default function Dashboard() {
                             </div>
                         </div>
 
-                        <div className="mt-8">
-                            <h3 className="font-semibold mb-4 flex items-center gap-2">
-                                <FileText className="h-4 w-4 text-muted-foreground" />
-                                Recent Uploads
-                            </h3>
-                            {chapters.length === 0 ? (
-                                <p className="text-sm text-muted-foreground italic">No chapters uploaded yet.</p>
-                            ) : (
-                                <div className="grid gap-4">
-                                    {chapters.slice(0, 3).map((chapter) => (
-                                        <div key={chapter.id} className="flex items-center justify-between p-4 bg-card border rounded-lg hover:shadow-md transition-shadow">
-                                            <div>
-                                                <p className="font-medium">{chapter.title}</p>
-                                                <p className="text-xs text-muted-foreground">{new Date(chapter.created_at).toLocaleDateString()}</p>
-                                            </div>
-                                            <Link to={`/chapters/${chapter.id}`}>
-                                                <Button variant="ghost" size="sm">View</Button>
-                                            </Link>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+
                     </CardContent>
                 </Card>
 
