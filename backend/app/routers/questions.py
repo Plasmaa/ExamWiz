@@ -29,17 +29,23 @@ async def generate_questions_for_chapter(
             num_flashcards = 0
             
         generated_data = llm.generate_questions(chapter.content_text, num_mcqs, num_short, num_flashcards, difficulty)
+        print(f"DEBUG: Generated Data: {generated_data}")
     except Exception as e:
+        print(f"ERROR: Generation failed: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"LLM Generation failed: {str(e)}")
     
     # Save Question Set
     time_limit = int(num_mcqs / 2) if is_exam else None
+    is_flashcard = num_flashcards > 0 and num_mcqs == 0 and num_short == 0
     
     question_set = models.QuestionSet(
-        title=f"Exam: {chapter.title}" if is_exam else f"Questions for {chapter.title}",
+        title=f"Exam: {chapter.title}" if is_exam else f"Flashcards: {chapter.title}" if is_flashcard else f"Questions for {chapter.title}",
         owner_id=current_user.id,
         chapter_id=chapter.id,
         is_exam=is_exam,
+        is_flashcard=is_flashcard,
         time_limit=time_limit
     )
     db.add(question_set)

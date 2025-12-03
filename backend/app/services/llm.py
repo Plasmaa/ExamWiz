@@ -43,15 +43,24 @@ def generate_questions(text: str, num_mcqs: int = 5, num_short: int = 3, num_fla
     {text[:15000]}  # Limit text length to avoid token limits if necessary
     """
     
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
-        ],
-        model="llama-3.3-70b-versatile", # Updated model
-        response_format={"type": "json_object"},
-    )
+    models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "llama-3.2-3b-preview"]
     
-    return json.loads(chat_completion.choices[0].message.content)
+    for model in models:
+        try:
+            print(f"DEBUG: Trying model {model}...")
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+                model=model,
+                response_format={"type": "json_object"},
+            )
+            return json.loads(chat_completion.choices[0].message.content)
+        except Exception as e:
+            print(f"WARNING: Model {model} failed: {e}")
+            continue
+            
+    raise Exception("All models failed to generate questions. Please try again later.")

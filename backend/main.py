@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 from app import models, database
-from app.routers import auth, upload, questions, export
+from app.routers import auth, upload, questions, export, attempts
 
 models.Base.metadata.create_all(bind=database.engine)
 
@@ -25,6 +25,7 @@ app.include_router(auth.router)
 app.include_router(upload.router)
 app.include_router(questions.router)
 app.include_router(export.router)
+app.include_router(attempts.router)
 
 @app.get("/")
 def read_root():

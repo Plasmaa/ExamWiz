@@ -60,7 +60,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={handleLogin} className="space-y-4">
+                        <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
                             <div className="space-y-2">
                                 <Label htmlFor="modal-email">Email</Label>
                                 <Input
@@ -70,6 +70,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
+                                    autoComplete="off"
                                 />
                             </div>
                             <div className="space-y-2">
@@ -80,6 +81,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
+                                    autoComplete="off"
                                 />
                                 <div className="flex justify-end">
                                     <Link to="#" className="text-sm text-primary hover:underline">Forgot password?</Link>

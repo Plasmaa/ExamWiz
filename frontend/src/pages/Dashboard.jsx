@@ -8,14 +8,26 @@ import { PlusCircle, FileText, List, ArrowRight, RotateCw } from 'lucide-react';
 export default function Dashboard() {
     const [chapters, setChapters] = useState([]);
     const [questionSets, setQuestionSets] = useState([]);
+    const [attempts, setAttempts] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const chaptersRes = await api.get('/chapters/');
+                const [chaptersRes, questionSetsRes, attemptsRes] = await Promise.all([
+                    api.get('/chapters/'),
+                    api.get('/questionsets/'),
+                    api.get('/attempts/user/')
+                ]);
                 setChapters(chaptersRes.data);
-                const questionSetsRes = await api.get('/questionsets/');
                 setQuestionSets(questionSetsRes.data);
+
+                const attemptsMap = {};
+                attemptsRes.data.forEach(attempt => {
+                    if (!attemptsMap[attempt.question_set_id]) {
+                        attemptsMap[attempt.question_set_id] = attempt;
+                    }
+                });
+                setAttempts(attemptsMap);
             } catch (error) {
                 console.error("Failed to fetch dashboard data", error);
             }
@@ -149,16 +161,30 @@ export default function Dashboard() {
                                 <p className="text-sm text-muted-foreground">No exams generated yet.</p>
                             ) : (
                                 <ul className="space-y-3">
-                                    {questionSets.slice(0, 5).map((qs) => (
-                                        <li key={qs.id}>
-                                            <Link to={`/questionsets/${qs.id}`} className="block group">
-                                                <div className="flex items-center justify-between text-sm">
-                                                    <span className="font-medium group-hover:text-primary transition-colors truncate max-w-[180px]">{qs.title}</span>
-                                                    <span className="text-muted-foreground text-xs">{new Date(qs.created_at).toLocaleDateString()}</span>
-                                                </div>
-                                            </Link>
-                                        </li>
-                                    ))}
+                                    {questionSets.slice(0, 5).map((qs) => {
+                                        const attempt = attempts[qs.id];
+                                        return (
+                                            <li key={qs.id}>
+                                                <Link to={qs.is_flashcard ? `/flashcards/${qs.id}` : (qs.is_exam && attempt) ? `/results/${attempt.id}` : qs.is_exam ? `/exam/${qs.id}` : `/questionsets/${qs.id}`} className="block group">
+                                                    <div className="flex items-center justify-between text-sm">
+                                                        <div className="flex items-center gap-2 truncate max-w-[200px]">
+                                                            <span className={`text-xs px-1.5 py-0.5 rounded ${qs.is_exam ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' : qs.is_flashcard ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                                                                {qs.is_exam ? 'Exam' : qs.is_flashcard ? 'Flashcard' : 'MCQ'}
+                                                            </span>
+                                                            <span className="font-medium group-hover:text-primary transition-colors truncate">{qs.title}</span>
+                                                        </div>
+                                                        {attempt ? (
+                                                            <span className="text-xs font-medium text-green-600 dark:text-green-400">
+                                                                {attempt.score}/{attempt.total_questions}
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-muted-foreground text-xs">{new Date(qs.created_at).toLocaleDateString()}</span>
+                                                        )}
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        )
+                                    })}
                                 </ul>
                             )}
                             <div className="mt-6 pt-4 border-t border-border/50">

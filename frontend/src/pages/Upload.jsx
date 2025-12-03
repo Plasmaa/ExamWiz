@@ -93,7 +93,8 @@ export default function Upload() {
             }
         } catch (error) {
             console.error("Generation failed", error);
-            alert("Generation failed. Please try again.");
+            const errorMessage = error.response?.data?.detail || "Generation failed. Please try again.";
+            alert(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -105,11 +106,11 @@ export default function Upload() {
                 <Button variant="ghost" className="mb-4 pl-0 hover:bg-transparent hover:text-primary" onClick={() => navigate('/dashboard')}>
                     <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
                 </Button>
-                <h1 className="text-3xl font-bold tracking-tight">{isFlashcardMode ? "Create Flashcards" : isExamMode ? "Take Exam" : "New Exam"}</h1>
+                <h1 className="text-3xl font-bold tracking-tight">{isFlashcardMode ? "Create Flashcards" : isExamMode ? "Take Exam" : "Practice MCQ"}</h1>
                 <p className="text-muted-foreground mt-2">
                     {isFlashcardMode ? "Upload content to generate flashcards for quick study." :
                         isExamMode ? "Upload content to generate a timed exam." :
-                            "Upload content and configure your exam settings."}
+                            "Upload content and configure your MCQ settings."}
                 </p>
             </div>
 

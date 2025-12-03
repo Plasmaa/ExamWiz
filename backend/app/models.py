@@ -13,6 +13,7 @@ class User(Base):
 
     chapters = relationship("Chapter", back_populates="owner")
     question_sets = relationship("QuestionSet", back_populates="owner")
+    attempts = relationship("ExamAttempt", back_populates="user")
 
 class Chapter(Base):
     __tablename__ = "chapters"
@@ -36,10 +37,12 @@ class QuestionSet(Base):
     chapter_id = Column(Integer, ForeignKey("chapters.id"))
     time_limit = Column(Integer, nullable=True) # In minutes
     is_exam = Column(Boolean, default=False)
+    is_flashcard = Column(Boolean, default=False)
 
     owner = relationship("User", back_populates="question_sets")
     chapter = relationship("Chapter", back_populates="question_sets")
     questions = relationship("Question", back_populates="question_set")
+    attempts = relationship("ExamAttempt", back_populates="question_set")
 
 class Question(Base):
     __tablename__ = "questions"
@@ -53,3 +56,17 @@ class Question(Base):
     question_set_id = Column(Integer, ForeignKey("question_sets.id"))
 
     question_set = relationship("QuestionSet", back_populates="questions")
+
+class ExamAttempt(Base):
+    __tablename__ = "exam_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    question_set_id = Column(Integer, ForeignKey("question_sets.id"))
+    score = Column(Integer)
+    total_questions = Column(Integer)
+    answers = Column(Text) # JSON string of user answers
+    completed_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User", back_populates="attempts")
+    question_set = relationship("QuestionSet", back_populates="attempts")

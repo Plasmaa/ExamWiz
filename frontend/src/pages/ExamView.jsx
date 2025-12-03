@@ -59,7 +59,7 @@ export default function ExamView() {
         setAnswers(prev => ({ ...prev, [questionId]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         let calculatedScore = 0;
         questionSet.questions.forEach(q => {
             if (answers[q.id] === q.correct_answer) {
@@ -69,6 +69,21 @@ export default function ExamView() {
         setScore(calculatedScore);
         setSubmitted(true);
         window.scrollTo(0, 0);
+
+        // Save attempt
+        try {
+            const attemptData = {
+                question_set_id: parseInt(id),
+                score: calculatedScore,
+                total_questions: questionSet.questions.length,
+                answers: answers
+            };
+            const response = await api.post('/attempts/', attemptData);
+            // Optional: Navigate to result view immediately or let user review here
+            navigate(`/results/${response.data.id}`);
+        } catch (error) {
+            console.error("Failed to save attempt", error);
+        }
     };
 
     if (loading) return <div className="p-8 flex justify-center"><div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div></div>;
@@ -88,9 +103,6 @@ export default function ExamView() {
                         )}
                     </p>
                 </div>
-                {!submitted && (
-                    <Button onClick={handleSubmit} size="lg">Submit Exam</Button>
-                )}
                 {submitted && (
                     <Link to="/dashboard">
                         <Button variant="outline">Back to Dashboard</Button>
@@ -112,7 +124,7 @@ export default function ExamView() {
                 </Card>
             )}
 
-            <div className="space-y-6 pb-20">
+            <div className="space-y-6 pt-8 pb-20">
                 {questionSet.questions.map((q, index) => (
                     <Card key={q.id} className={`border shadow-sm ${submitted ? (answers[q.id] === q.correct_answer ? 'border-green-200 bg-green-50/30' : 'border-red-200 bg-red-50/30') : ''}`}>
                         <CardHeader className="pb-2">
@@ -132,14 +144,14 @@ export default function ExamView() {
                                         const options = typeof q.options === 'string' ? JSON.parse(q.options) : q.options;
                                         return options.map((opt, i) => (
                                             <div key={i} className={`flex items-center space-x-2 p-3 rounded-lg border transition-colors ${submitted
-                                                    ? opt === q.correct_answer
-                                                        ? 'bg-green-100 border-green-300 dark:bg-green-900/30 dark:border-green-800'
-                                                        : answers[q.id] === opt
-                                                            ? 'bg-red-100 border-red-300 dark:bg-red-900/30 dark:border-red-800'
-                                                            : 'border-transparent'
+                                                ? opt === q.correct_answer
+                                                    ? 'bg-green-100 border-green-300 dark:bg-green-900/30 dark:border-green-800'
                                                     : answers[q.id] === opt
-                                                        ? 'bg-primary/5 border-primary'
-                                                        : 'border-transparent hover:bg-accent'
+                                                        ? 'bg-red-100 border-red-300 dark:bg-red-900/30 dark:border-red-800'
+                                                        : 'border-transparent'
+                                                : answers[q.id] === opt
+                                                    ? 'bg-primary/5 border-primary'
+                                                    : 'border-transparent hover:bg-accent'
                                                 }`}>
                                                 <RadioGroupItem value={opt} id={`q${q.id}-opt${i}`} disabled={submitted} />
                                                 <Label htmlFor={`q${q.id}-opt${i}`} className="flex-1 cursor-pointer font-normal">
@@ -167,6 +179,11 @@ export default function ExamView() {
                         </CardContent>
                     </Card>
                 ))}
+                {!submitted && (
+                    <div className="flex justify-center pt-8">
+                        <Button onClick={handleSubmit} size="lg" className="w-full md:w-auto min-w-[200px]">Submit Exam</Button>
+                    </div>
+                )}
             </div>
         </div>
     );
