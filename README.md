@@ -2,6 +2,9 @@
 
 ExamWiz is an AI-powered study companion that helps you generate practice exams and flashcards from your study materials. Upload PDFs, images, or text files, and let ExamWiz create tailored questions to help you master any subject.
 
+
+![ExamWiz Dashboard](dashboard-preview.png)
+
 ## Features
 
 -   **AI Question Generation**: Automatically generates Multiple Choice Questions (MCQs) and Short Answer questions from your uploaded content.
