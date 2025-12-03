@@ -1,78 +1,39 @@
 # ExamWiz
+**Your AI-Powered Study Companion**
 
-ExamWiz is an AI-powered study companion that helps you generate practice exams and flashcards from your study materials. Upload PDFs, images, or text files, and let ExamWiz create tailored questions to help you master any subject.
-
+ExamWiz is an intelligent educational platform designed to revolutionize how students prepare for exams. By leveraging advanced Artificial Intelligence, ExamWiz transforms static study materials into dynamic, interactive learning experiences.
 
 ![ExamWiz Dashboard](dashboard-preview.png)
 
-## Features
+## The Problem
+Students often struggle to test their knowledge effectively before exams. Creating flashcards and practice questions manually is time-consuming and inefficient.
 
--   **AI Question Generation**: Automatically generates Multiple Choice Questions (MCQs) and Short Answer questions from your uploaded content.
--   **Flashcard Mode**: Create digital flashcards for quick review and active recall.
--   **Practice MCQ Mode**: Focus specifically on practicing MCQs with instant feedback.
--   **Dashboard**: Manage your uploaded chapters, generated exams, and track your progress.
--   **Responsive Design**: Study on the go with a fully responsive mobile-friendly interface.
--   **Dark Mode**: Toggle between light and dark themes for comfortable viewing in any environment.
--   **Export Options**: Export your exams to PDF, DOCX, or TXT formats.
+## The Solution
+ExamWiz automates the study process. Simply upload your notes, textbooks, or slides, and let our AI instantly generate tailored practice exams and revision tools.
 
-## Tech Stack
+## Key Features
 
--   **Frontend**: React, Vite, Tailwind CSS, Lucide React
--   **Backend**: FastAPI, SQLAlchemy, SQLite (or PostgreSQL)
--   **AI/ML**: Groq API (Llama 3), OCR for image text extraction
+### 🚀 AI Question Generation
+Instantly convert any text, PDF, or image into a comprehensive exam. Our AI understands context and generates high-quality Multiple Choice and Short Answer questions to test deep understanding.
 
-## Getting Started
+### ⚡ Smart Flashcards
+Accelerate memorization with auto-generated flashcards. Perfect for active recall and spaced repetition study techniques.
 
-### Prerequisites
+### 🎯 Practice Mode
+Simulate real exam conditions with our Practice MCQ mode. Get instant feedback on your answers to identify weak areas immediately.
 
--   Node.js and npm
--   Python 3.8+
--   Groq API Key
+### 📊 Progress Dashboard
+Track your learning journey. Our intuitive dashboard organizes all your study materials and exam history, giving you a clear view of your progress.
 
-### Installation
+### 📱 Study Anywhere
+Built with a modern, responsive design that works seamlessly on laptops, tablets, and phones. Study whenever and wherever inspiration strikes.
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/Plasmaa/ExamWiz.git
-    cd ExamWiz
-    ```
+## How It Works
 
-2.  **Backend Setup:**
-    ```bash
-    cd backend
-    python -m venv venv
-    # Windows
-    venv\Scripts\activate
-    # macOS/Linux
-    # source venv/bin/activate
-    pip install -r requirements.txt
-    ```
-    Create a `.env` file in the `backend` directory and add your API key:
-    ```env
-    GROQ_API_KEY=your_api_key_here
-    ```
-    Start the backend server:
-    ```bash
-    uvicorn main:app --reload
-    ```
+1.  **Upload**: Drag and drop your study materials (PDFs, images, notes) into the dashboard.
+2.  **Customize**: Choose your preferred format—Flashcards, MCQs, or a Full Exam.
+3.  **Generate**: Watch as ExamWiz analyzes your content and builds a custom study set in seconds.
+4.  **Master**: Engage with the material, track your scores, and ace your exams.
 
-3.  **Frontend Setup:**
-    ```bash
-    cd frontend
-    npm install
-    npm run dev
-    ```
-
-4.  **Access the App:**
-    Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal).
-
-## Usage
-
-1.  **Upload**: Go to the Dashboard and click "Practice MCQ" or "Flashcards".
-2.  **Configure**: Upload your study material and choose the number of questions.
-3.  **Generate**: Click "Generate Questions" and wait for the AI to process your content.
-4.  **Study**: Take the exam or flip through flashcards!
-
-## License
-
-This project is licensed under the MIT License.
+---
+*Ready to transform your study routine? Contact us to learn more about ExamWiz.*
