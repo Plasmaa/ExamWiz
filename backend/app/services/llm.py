@@ -7,11 +7,12 @@ client = Groq(
     api_key=os.environ.get("GROQ_API_KEY"),
 )
 
-def generate_questions(text: str, num_mcqs: int = 5, num_short: int = 3, difficulty: str = "Medium"):
+def generate_questions(text: str, num_mcqs: int = 5, num_short: int = 3, num_flashcards: int = 0, difficulty: str = "Medium"):
     prompt = f"""
     You are an expert exam question generator. Based on the provided text, generate the following questions:
-    - {num_mcqs} Multiple Choice Questions (MCQs) with 4 options and the correct answer indicated.
-    - {num_short} Short Answer Questions (1-2 sentences).
+    - EXACTLY {num_mcqs} Multiple Choice Questions (MCQs) with 4 options and the correct answer indicated.
+    - EXACTLY {num_short} Short Answer Questions (1-2 sentences).
+    - EXACTLY {num_flashcards} Flashcards (Front/Back).
     
     Difficulty Level: {difficulty}
     
@@ -28,6 +29,12 @@ def generate_questions(text: str, num_mcqs: int = 5, num_short: int = 3, difficu
             {{
                 "question": "Question text",
                 "answer": "Model answer"
+            }}
+        ],
+        "flashcards": [
+            {{
+                "front": "Term or Concept",
+                "back": "Definition or Explanation"
             }}
         ]
     }}

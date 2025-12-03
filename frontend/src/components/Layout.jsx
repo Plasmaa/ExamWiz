@@ -25,7 +25,7 @@ export default function Layout({ children }) {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/');
     };
 
     const navItems = [

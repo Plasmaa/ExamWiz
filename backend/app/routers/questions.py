@@ -13,6 +13,7 @@ async def generate_questions_for_chapter(
     chapter_id: int,
     num_mcqs: int = 5,
     num_short: int = 3,
+    num_flashcards: int = 0,
     difficulty: str = "Medium",
     current_user: models.User = Depends(auth.get_current_user),
     db: Session = Depends(database.get_db)
@@ -22,7 +23,7 @@ async def generate_questions_for_chapter(
         raise HTTPException(status_code=404, detail="Chapter not found")
     
     try:
-        generated_data = llm.generate_questions(chapter.content_text, num_mcqs, num_short, difficulty)
+        generated_data = llm.generate_questions(chapter.content_text, num_mcqs, num_short, num_flashcards, difficulty)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"LLM Generation failed: {str(e)}")
     
@@ -53,6 +54,16 @@ async def generate_questions_for_chapter(
             question_text=short["question"],
             question_type="SHORT",
             correct_answer=short["answer"],
+            difficulty=difficulty,
+            question_set_id=question_set.id
+        )
+        db.add(q)
+
+    for flashcard in generated_data.get("flashcards", []):
+        q = models.Question(
+            question_text=flashcard["front"],
+            question_type="FLASHCARD",
+            correct_answer=flashcard["back"],
             difficulty=difficulty,
             question_set_id=question_set.id
         )

@@ -59,11 +59,13 @@ export default function Upload() {
         try {
             const params = isFlashcardMode ? {
                 num_mcqs: 0,
-                num_short: numFlashcards,
+                num_short: 0,
+                num_flashcards: numFlashcards,
                 difficulty: 'Medium'
             } : {
                 num_mcqs: numMcqs,
                 num_short: 0,
+                num_flashcards: 0,
                 difficulty: 'Medium'
             };
 
@@ -138,7 +140,8 @@ export default function Upload() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex justify-end">
+                            <div className="flex justify-end gap-2">
+                                <Button variant="outline" type="button" onClick={() => navigate('/dashboard')}>Back</Button>
                                 <Button type="submit" disabled={loading} className="min-w-[150px]">
                                     {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                                     {loading ? "Processing..." : "Continue"}
@@ -161,11 +164,11 @@ export default function Upload() {
                                     </div>
                                 ) : (
                                     <div className="grid gap-2">
-                                        <Label>Number of MCQs (Max 20)</Label>
+                                        <Label>Number of MCQs (Max 100)</Label>
                                         <Input
                                             type="number"
                                             min="1"
-                                            max="20"
+                                            max="100"
                                             value={numMcqs}
                                             onChange={(e) => setNumMcqs(parseInt(e.target.value))}
                                         />

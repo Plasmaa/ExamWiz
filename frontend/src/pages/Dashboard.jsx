@@ -46,7 +46,7 @@ export default function Dashboard() {
                                         </div>
                                         <h3 className="text-lg font-semibold mb-2">Practice MCQ</h3>
                                         <p className="text-muted-foreground text-sm">
-                                            Upload content to generate MCQs and short questions for practice.
+                                            Upload content to generate MCQs
                                         </p>
                                     </div>
                                     <Link to="/upload">
