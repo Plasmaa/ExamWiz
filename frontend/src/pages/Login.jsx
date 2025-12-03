@@ -63,10 +63,7 @@ export default function Login() {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <Label htmlFor="password">Password</Label>
-                                    <Link to="#" className="text-sm text-primary hover:underline">Forgot password?</Link>
-                                </div>
+                                <Label htmlFor="password">Password</Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -74,6 +71,9 @@ export default function Login() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
+                                <div className="flex justify-end">
+                                    <Link to="#" className="text-sm text-primary hover:underline">Forgot password?</Link>
+                                </div>
                             </div>
                             {error && <div className="text-destructive text-sm bg-destructive/10 p-3 rounded-md">{error}</div>}
                             <Button className="w-full" type="submit" disabled={loading}>

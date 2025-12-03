@@ -75,6 +75,25 @@ export default function Dashboard() {
                                     </Link>
                                 </div>
                             </div>
+
+                            <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-100 dark:border-purple-800">
+                                <div className="flex flex-col h-full justify-between gap-4">
+                                    <div>
+                                        <div className="p-2 bg-purple-100 dark:bg-purple-800 rounded-lg text-purple-600 dark:text-purple-400 w-fit mb-4">
+                                            <RotateCw className="h-6 w-6" />
+                                        </div>
+                                        <h3 className="text-lg font-semibold mb-2">Take Exam</h3>
+                                        <p className="text-muted-foreground text-sm">
+                                            Simulate a real exam environment with a timer.
+                                        </p>
+                                    </div>
+                                    <Link to="/upload?mode=exam">
+                                        <Button variant="outline" className="w-full rounded-full border-purple-200 hover:bg-purple-100 dark:border-purple-700 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-400">
+                                            Start Exam <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="mt-8">

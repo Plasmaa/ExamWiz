@@ -10,6 +10,7 @@ import QuestionSetsList from './pages/QuestionSetsList';
 
 import LandingPage from './pages/LandingPage';
 import FlashcardMode from './pages/FlashcardMode';
+import ExamView from './pages/ExamView';
 import Layout from './components/Layout';
 import { ThemeProvider } from './components/theme-provider';
 
@@ -64,6 +65,13 @@ function App() {
             <PrivateRoute>
               <Layout>
                 <FlashcardMode />
+              </Layout>
+            </PrivateRoute>
+          } />
+          <Route path="/exam/:id" element={
+            <PrivateRoute>
+              <Layout>
+                <ExamView />
               </Layout>
             </PrivateRoute>
           } />

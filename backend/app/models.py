@@ -34,6 +34,8 @@ class QuestionSet(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     owner_id = Column(Integer, ForeignKey("users.id"))
     chapter_id = Column(Integer, ForeignKey("chapters.id"))
+    time_limit = Column(Integer, nullable=True) # In minutes
+    is_exam = Column(Boolean, default=False)
 
     owner = relationship("User", back_populates="question_sets")
     chapter = relationship("Chapter", back_populates="question_sets")

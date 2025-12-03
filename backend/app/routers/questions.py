@@ -14,6 +14,7 @@ async def generate_questions_for_chapter(
     num_mcqs: int = 5,
     num_short: int = 3,
     num_flashcards: int = 0,
+    is_exam: bool = False,
     difficulty: str = "Medium",
     current_user: models.User = Depends(auth.get_current_user),
     db: Session = Depends(database.get_db)
@@ -23,15 +24,23 @@ async def generate_questions_for_chapter(
         raise HTTPException(status_code=404, detail="Chapter not found")
     
     try:
+        if is_exam:
+            num_short = 0
+            num_flashcards = 0
+            
         generated_data = llm.generate_questions(chapter.content_text, num_mcqs, num_short, num_flashcards, difficulty)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"LLM Generation failed: {str(e)}")
     
     # Save Question Set
+    time_limit = int(num_mcqs / 2) if is_exam else None
+    
     question_set = models.QuestionSet(
-        title=f"Questions for {chapter.title}",
+        title=f"Exam: {chapter.title}" if is_exam else f"Questions for {chapter.title}",
         owner_id=current_user.id,
-        chapter_id=chapter.id
+        chapter_id=chapter.id,
+        is_exam=is_exam,
+        time_limit=time_limit
     )
     db.add(question_set)
     db.commit()
