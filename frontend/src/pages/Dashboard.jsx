@@ -114,21 +114,7 @@ export default function Dashboard() {
 
                 {/* Sidebar Area - Activity/Stats */}
                 <div className="space-y-6">
-                    <Card className="border-none shadow-sm">
-                        <CardHeader>
-                            <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Quick Stats</CardTitle>
-                        </CardHeader>
-                        <CardContent className="grid grid-cols-1 gap-4">
-                            <div className="p-4 border rounded-lg bg-card">
-                                <div className="text-2xl font-bold">{chapters.length}</div>
-                                <div className="text-xs text-muted-foreground mt-1">Uploaded Chapters</div>
-                            </div>
-                            <div className="p-4 border rounded-lg bg-card">
-                                <div className="text-2xl font-bold">{questionSets.length}</div>
-                                <div className="text-xs text-muted-foreground mt-1">Generated Question Sets</div>
-                            </div>
-                        </CardContent>
-                    </Card>
+
 
                     <Card className="border-none shadow-sm bg-primary/5">
                         <CardHeader>

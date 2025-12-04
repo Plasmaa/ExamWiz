@@ -118,7 +118,7 @@ export default function Upload() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         {step === 1 ? <FileType className="h-5 w-5 text-primary" /> : <Settings className="h-5 w-5 text-primary" />}
-                        {step === 1 ? "Upload Content" : "Configure Exam"}
+                        {step === 1 ? "Upload Content" : isFlashcardMode ? "Configure Flashcards" : isExamMode ? "Configure Exam" : "Configure MCQ"}
                     </CardTitle>
                     <CardDescription>
                         {step === 1
@@ -176,25 +176,37 @@ export default function Upload() {
                             <div className="grid gap-4">
                                 {isFlashcardMode ? (
                                     <div className="grid gap-2">
-                                        <Label>Number of Flashcards (Max 100)</Label>
-                                        <Input
-                                            type="number"
-                                            min="1"
-                                            max="100"
-                                            value={numFlashcards}
-                                            onChange={(e) => setNumFlashcards(parseInt(e.target.value))}
-                                        />
+                                        <Label>Number of Flashcards</Label>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {[10, 20, 30, 50, 70, 100].map((num) => (
+                                                <Button
+                                                    key={num}
+                                                    type="button"
+                                                    variant={numFlashcards === num ? "default" : "outline"}
+                                                    onClick={() => setNumFlashcards(num)}
+                                                    className="w-full"
+                                                >
+                                                    {num}
+                                                </Button>
+                                            ))}
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className="grid gap-2">
-                                        <Label>Number of MCQs (Max 100)</Label>
-                                        <Input
-                                            type="number"
-                                            min="1"
-                                            max="100"
-                                            value={numMcqs}
-                                            onChange={(e) => setNumMcqs(parseInt(e.target.value))}
-                                        />
+                                        <Label>Number of MCQs</Label>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {[10, 20, 30, 50, 70, 100].map((num) => (
+                                                <Button
+                                                    key={num}
+                                                    type="button"
+                                                    variant={numMcqs === num ? "default" : "outline"}
+                                                    onClick={() => setNumMcqs(num)}
+                                                    className="w-full"
+                                                >
+                                                    {num}
+                                                </Button>
+                                            ))}
+                                        </div>
                                         {isExamMode && (
                                             <p className="text-sm text-muted-foreground mt-1">
                                                 Time Limit: <span className="font-medium text-primary">{Math.ceil(numMcqs / 2)} mins</span>

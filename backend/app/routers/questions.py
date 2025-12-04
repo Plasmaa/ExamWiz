@@ -29,6 +29,15 @@ async def generate_questions_for_chapter(
             num_flashcards = 0
             
         generated_data = llm.generate_questions(chapter.content_text, num_mcqs, num_short, num_flashcards, difficulty)
+        
+        # Validate counts
+        gen_mcqs = len(generated_data.get("mcqs", []))
+        gen_short = len(generated_data.get("short_questions", []))
+        gen_flash = len(generated_data.get("flashcards", []))
+        
+        print(f"DEBUG: Requested - MCQs: {num_mcqs}, Short: {num_short}, Flashcards: {num_flashcards}")
+        print(f"DEBUG: Generated - MCQs: {gen_mcqs}, Short: {gen_short}, Flashcards: {gen_flash}")
+        
         print(f"DEBUG: Generated Data: {generated_data}")
     except Exception as e:
         print(f"ERROR: Generation failed: {e}")
